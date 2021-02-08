@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
+from django.contrib import messages
 
 import django_on_heroku
 
@@ -42,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'expenses',
+    'userpreferences',
+    'userincome',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +133,14 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,'expenseswebsite/static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 django_on_heroku.settings(locals())
+
+MESSAGE_TAGS= {
+    messages.ERROR: 'danger',
+}
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
+EMAIL_PORT = 587
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
